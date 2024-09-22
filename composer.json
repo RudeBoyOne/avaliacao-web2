@@ -1,0 +1,19 @@
+{
+    "name": "avaliacao/web",
+    "description": "projeto de avaliação de desemvolvimento web 2 Fatec DSM",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Avaliacao\\Web\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Lucas Ferreira Nogueira",
+            "email": "lucas.ferreiranogueira@outlook.com",
+            "name": "Felipe Rodrigues",
+            "email": "01felipeestudos@gmail.com"
+        }
+    ],
+    "require": {}
+}
