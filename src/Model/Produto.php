@@ -12,14 +12,13 @@ class Produto {
     private $userInsert;
     private $data_hora;
 
-    public function __construct( $nome, $descricao, $preco, $estoque, $userInsert, $data_hora) {
+    public function __construct($nome, $descricao, $preco, $estoque, $userInsert) {
 
         $this->nome = $nome;
         $this->descricao = $descricao;
         $this->preco = $preco;
         $this->estoque = $estoque;
         $this->userInsert = $userInsert;
-        $this->data_hora = $data_hora;
 
     }
 
