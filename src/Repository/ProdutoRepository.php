@@ -3,6 +3,7 @@ namespace Avaliacao\Web\Repository;
 
 use Avaliacao\Web\Database\DatabaseConnection;
 use Avaliacao\Web\Common\DateTimeZoneCustom;
+use Avaliacao\Web\Model\Log;
 use PDO;
 
 class ProdutoRepository {
@@ -37,11 +38,11 @@ class ProdutoRepository {
         $stmt->bindParam(":data_hora", $data_hora);
         
         $stmt->execute();
+
+        $this->genaratorLog("Criar produto", $data_hora, $this->connection->lastInsertId(), $userInsert);
     }
     
     public function updateProduto($id, $produto) {
-        // $produtoUpdate = $this->searchByIdProduto($id)[0];
-        
         $nome = $produto->getNome();
         $descricao = $produto->getDescricao();
         $preco = $produto->getPreco();
@@ -62,6 +63,8 @@ class ProdutoRepository {
         $stmt->bindParam(":produto_id", $id);
         
         $stmt->execute();
+
+        $this->genaratorLog("Atualizar produto", $data_hora, $id, $userInsert);
     }
 
     public function searchByIdProduto($id) {
@@ -83,11 +86,30 @@ class ProdutoRepository {
     }
 
     public function deleteByIdProduto($id) {
+        $arraySearch = $this->searchByIdProduto($id);
+        $userInsert = "";
+
+        foreach ($arraySearch as $key => $value) {
+            if ($key === 'userInsert') {
+                $userInsert = $value;
+            }
+        }
+
         $query = "DELETE FROM produto WHERE produto.id = :id";
         $stmt = $this->connection->prepare($query);
 
         $stmt->bindParam(":id", $id);
 
-        return $stmt->execute();
+        $stmt->execute();
+
+        $this->genaratorLog("Deletar produto", DateTimeZoneCustom::getCurrentDateTime(), $id, $userInsert);
+    }
+
+    public function genaratorLog($acao, $data_hora, $produto_id, $userInsert) {
+        $log = new Log($acao, $data_hora, $produto_id, $userInsert);
+
+        $logRepository = new LogRepository($this->connection);
+
+        $logRepository->createLog($log);
     }
 }
