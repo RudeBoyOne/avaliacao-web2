@@ -4,6 +4,7 @@ namespace Avaliacao\Web\Repository;
 use Avaliacao\Web\Database\DatabaseConnection;
 use Avaliacao\Web\Common\DateTimeZoneCustom;
 use Avaliacao\Web\Model\Log;
+use Avaliacao\Web\Model\Produto;
 use PDO;
 
 class ProdutoRepository {
@@ -18,7 +19,7 @@ class ProdutoRepository {
 
 
     
-    public function createProduto($produto) {
+    public function createProduto(Produto $produto) {
         $nome = $produto->getNome();
         $descricao = $produto->getDescricao();
         $preco = $produto->getPreco();
@@ -42,7 +43,7 @@ class ProdutoRepository {
         $this->genaratorLog("Criar produto", $data_hora, $this->connection->lastInsertId(), $userInsert);
     }
     
-    public function updateProduto($id, $produto) {
+    public function updateProduto($id, Produto $produto) {
         $nome = $produto->getNome();
         $descricao = $produto->getDescricao();
         $preco = $produto->getPreco();

@@ -1,6 +1,7 @@
 <?php
 namespace Avaliacao\Web;
 
+use Avaliacao\Web\Controller\ProdutoController;
 use Avaliacao\Web\Database\DatabaseConnection;
 use Avaliacao\Web\Model\Produto;
 use Avaliacao\Web\Repository\LogRepository;
@@ -12,6 +13,7 @@ require_once "../vendor/autoload.php";
 header('Content-Type: application/json');
 
 $produtoRepository = new ProdutoRepository;
+$produtoController = new ProdutoController($produtoRepository);
 $logRepository = new LogRepository(DatabaseConnection::getInstance());
 $method = $_SERVER['REQUEST_METHOD'];
 $uri = $_SERVER['REQUEST_URI'];
@@ -48,17 +50,7 @@ if ($method == 'POST' && $uri == '/produto') {
 
     $data = json_decode(file_get_contents('php://input'));
 
-    $produtoModel = new Produto(
-        $data->nome,
-        $data->descricao,
-        $data->preco,
-        $data->estoque,
-        $data->userInsert
-    );
-    
-    $result = $produtoRepository->createProduto($produtoModel);
-    
-    echo $result;
+    $produtoController->create($data);
     
 }
 
