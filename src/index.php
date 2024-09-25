@@ -1,9 +1,9 @@
 <?php
 namespace Avaliacao\Web;
 
+use Avaliacao\Web\Controller\LogController;
 use Avaliacao\Web\Controller\ProdutoController;
 use Avaliacao\Web\Database\DatabaseConnection;
-use Avaliacao\Web\Model\Produto;
 use Avaliacao\Web\Repository\LogRepository;
 use Avaliacao\Web\Repository\ProdutoRepository;
 
@@ -12,92 +12,47 @@ require_once "../vendor/autoload.php";
 
 header('Content-Type: application/json');
 
-$produtoRepository = new ProdutoRepository;
+$produtoRepository = new ProdutoRepository();
 $produtoController = new ProdutoController($produtoRepository);
-$logRepository = new LogRepository(DatabaseConnection::getInstance());
+$logRepository = new LogRepository();
+$logController = new LogController($logRepository);
 $method = $_SERVER['REQUEST_METHOD'];
 $uri = $_SERVER['REQUEST_URI'];
 
-if ($method == 'GET' && $uri == '/produto') {
 
-    $result = $produtoRepository->getAllProdutos();   
+switch($method){
+    case 'GET':
 
-    echo json_encode([
-        'status' => 'true',
-        'message' => 'mensagem de sucesso',
-        'data' => $result        
-    ]);
+            if ($uri == '/produto') {
+                $produtoController->getAll();
+            }
 
-}
+            if(preg_match('/\/produto\/(\d+)/', $uri, $match)){
+                $id = $match[1];
+                $data = json_decode(file_get_contents('php://input'));
+                $produtoController->searchById($id);
+                break;
+            } 
 
-if ($method == 'GET') {
-
-    preg_match('/\/produto\/(\d+)/', $uri, $match);
-
-
-    $result = $produtoRepository->searchByIdProduto($match[1]);   
-
-    echo json_encode([
-        'status' => 'true',
-        'message' => 'mensagem de sucesso',
-        'data' => $result        
-    ]);
-
-}
-
-
-if ($method == 'POST' && $uri == '/produto') {
-
-    $data = json_decode(file_get_contents('php://input'));
-
-    $produtoController->create($data);
-    
-}
-
-if ($method == 'PUT' && preg_match('/\/produto\/(\d+)/', $uri, $match)) {
-
-    $id = $match[1];
-    
-    echo $id;
-    
-    $data = json_decode(file_get_contents('php://input'));
-
-    $produtoModel = new Produto(
-        $data->nome,
-        $data->descricao,
-        $data->preco,
-        $data->estoque,
-        $data->userInsert
-    );
-
-    $result = $produtoRepository->updateProduto($id, $produtoModel);
-
-    echo $result;
-}
-
-if ($method == 'DELETE') {
-
-    preg_match('/\/produto\/(\d+)/', $uri, $match);
-
-
-    $result = $produtoRepository->deleteByIdProduto($match[1]);   
-
-    echo json_encode([
-        'status' => 'true',
-        'message' => 'Produto excluído com sucesso!',
-        'data' => $result
-    ]);
-
-}
-
-if ($method == 'GET' && $uri == '/log') {
-
-    $result = $logRepository->getAllLog();   
-
-    echo json_encode([
-        'status' => 'true',
-        'message' => 'mensagem de sucesso',
-        'data' => $result        
-    ]);
-
+            if( $uri == '/log'){
+                $logController->getAll();
+            }
+    break;
+    case 'POST':
+                $data = json_decode(file_get_contents('php://input'));
+                $produtoController->create($data);
+    break;
+    case 'PUT':
+            if(preg_match('/\/produto\/(\d+)/', $uri, $match)){
+                $id = $match[1];
+                $data = json_decode(file_get_contents('php://input'));
+                $produtoController->update($id, $data);
+            }
+    break;
+    case 'DELETE':
+            if(preg_match('/\/produto\/(\d+)/', $uri, $match)){
+                $id = $match[1];
+                $produtoController->delete($id);
+            }
+    break;
 }
