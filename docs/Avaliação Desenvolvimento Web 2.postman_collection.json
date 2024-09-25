@@ -1,0 +1,293 @@
+{
+	"info": {
+		"_postman_id": "49b053f1-4ad8-43f1-8e9b-80431cb82387",
+		"name": "Avaliação Desenvolvimento Web 2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20377676"
+	},
+	"item": [
+		{
+			"name": "Produto",
+			"item": [
+				{
+					"name": "get all produtos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"// Test for status code 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/produto",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"produto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									" ",
+									"pm.test(\"Response time is less than 250ms\", function () {",
+									"  pm.expect(pm.response.responseTime).to.be.below(250);",
+									"});",
+									"",
+									"pm.test(\"Response status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response body has the required fields for a product\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.data.nome).to.exist;",
+									"    pm.expect(responseData.data.preco).to.exist;",
+									"    pm.expect(responseData.data.descricao).to.exist;",
+									"    pm.expect(responseData.data.estoque).to.exist;",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/produto/{{id_produto}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"produto",
+								"{{id_produto}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create produto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 201\", function () {",
+									"  pm.response.to.have.status(201);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is less than 250ms\", function () {",
+									"  pm.expect(pm.response.responseTime).to.be.below(250);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Monitor LED\",\n    \"descricao\": \"monitor super wide full master hd\",\n    \"preco\": 800.0,\n    \"estoque\": 30,\n    \"userInsert\": \"Loucas\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/produto",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"produto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create produto Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is within an acceptable range\", function () {",
+									"  pm.expect(pm.response.responseTime).to.be.below(1000);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Teclado mecânico\",\n    \"descricao\": \"low profile com suites de baixo impacto\",\n    \"preco\": 500.0,\n    \"estoque\": 40,\n    \"userInsert\": \"Feucas\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/produto/{{id_produto}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"produto",
+								"{{id_produto}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search by id Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is less than 250ms\", function () {",
+									"  pm.expect(pm.response.responseTime).to.be.below(250);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Validate the response schema for DELETE request\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('object');",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/produto/{{id_produto}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"produto",
+								"{{id_produto}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Log",
+			"item": [
+				{
+					"name": "get all logs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is within an acceptable range\", function () {",
+									"  pm.expect(pm.response.responseTime).to.be.below(250);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Status is a boolean value\", function () {",
+									"  const responseData = pm.response.json();",
+									"  pm.expect(responseData.status).to.be.a('boolean');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Data is an array with at least one element\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.data).to.be.an('array').and.to.have.lengthOf.at.least(1);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/log",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"log"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
