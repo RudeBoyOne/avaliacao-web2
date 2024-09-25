@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "49b053f1-4ad8-43f1-8e9b-80431cb82387",
+		"_postman_id": "20f5a369-d9ed-4abc-903e-2715b3544ec8",
 		"name": "Avaliação Desenvolvimento Web 2",
+		"description": "## Descrição do Projeto\n\nEste projeto consiste em uma aplicação para gerenciamento de produtos, que permite cadastrar, atualizar, listar e excluir produtos, além de registrar as operações realizadas em uma tabela de logs. A aplicação utiliza um banco de dados SQLite para armazenamento de dados.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "20377676"
+		"_exporter_id": "38574305"
 	},
 	"item": [
 		{
@@ -40,7 +41,8 @@
 							"path": [
 								"produto"
 							]
-						}
+						},
+						"description": "Esse método deve retornar todos os produtos presentes no banco de dados.  \n  \nExemplo de resposta:  \n\"  \nid:12  \nnome: Pipa  \ndecricao: Pipa muito bonita que voa muito alto  \npreco: 10.0  \nestoque: 12  \nUserInsert: Felipe  \n\"  \n\"  \nid:13  \nnome: Carrinho  \ndecricao: Carrinho de controle remoto muito veloz  \npreco: 100.0  \nestoque: 10  \nUserInsert: Lucas  \n\""
 					},
 					"response": []
 				},
@@ -90,7 +92,8 @@
 								"produto",
 								"{{id_produto}}"
 							]
-						}
+						},
+						"description": "Esse método deve retornar um produto especifico, baseado no seu \"id\".\n\nParametros de Entrada:\n\nO \"id\" do produto deve existir no banco de dados.\n\nExemplo de resposta:\n\nerro 400: \"Error ao realizar a requisição corrija os dados enviados\"."
 					},
 					"response": []
 				},
@@ -136,7 +139,8 @@
 							"path": [
 								"produto"
 							]
-						}
+						},
+						"description": "Esse método deve criar um produto quando acionado.\n\n### **Parâmetros de Entrada:**\n\nNome: Mínimo 3 caracteres  \nPreço: Preço deve ser número de ponto flutuante e positivo  \nEstoque: O estoque deve ser um número inteiro e positivo.\n\n### **Exemplo de Requisição:**\n\n[http://localhost:8080/produto](http://localhost:8080/produto)\n\n### Exemplo de Resposta:\n\nCaso o usuário tenha errado o nome:\n\nerro 400: \"Nome do Produto deve ter no minimo 3 caracteres\".\n\nCaso usuário tenha errado o preço:  \nerro 400: \"O preço do produto deve ser um número de ponto flutuante e positivo.\"\n\nCaso usuário tenha errado o estoque:  \nerro 400: \"O estoque para o produto deve ser um número inteiro e positivo.\"\n\nCaso o produto não exista:  \nerro 404: Error ao realizar a requisição corrija os dados enviados."
 					},
 					"response": []
 				},
@@ -184,7 +188,8 @@
 								"produto",
 								"{{id_produto}}"
 							]
-						}
+						},
+						"description": "Esse comando deve atualizar um produto já existente.\n\nParâmetros de Entrada:\n\nNome: Mínimo 3 caracteres  \nPreço: Preço deve ser número de ponto flutuante e positivo  \nEstoque: O estoque deve ser um número inteiro e positivo.  \nId: O id do produto deve existir no banco de dados.\n\n### Exemplo de Resposta:\n\nCaso o usuário tenha errado o nome:\n\nerro 400: \"Nome do Produto deve ter no minimo 3 caracteres\".\n\nCaso usuário tenha errado o preço:  \nerro 400: \"O preço do produto deve ser um número de ponto flutuante e positivo.\"\n\nCaso usuário tenha errado o estoque:  \nerro 400: \"O estoque para o produto deve ser um número inteiro e positivo.\"\n\nCaso o produto não exista:  \nerro 404: Error ao realizar a requisição corrija os dados enviados."
 					},
 					"response": []
 				},
@@ -227,11 +232,13 @@
 								"produto",
 								"{{id_produto}}"
 							]
-						}
+						},
+						"description": "Esse comando deve deletar um produto já existente no banco de dados.\n\nParâmetros de Entrada:\n\nO produto a ser excluído deve existir no banco de dados.\n\nExemplos de Reposta:\n\nSucesso200:\"Registro Excluído com Sucesso \"\n\nErro400: \"Erro ao realizar a exclusão do registro\""
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Folder que contém os métodos relacionados aos produtos."
 		},
 		{
 			"name": "Log",
@@ -283,11 +290,13 @@
 							"path": [
 								"log"
 							]
-						}
+						},
+						"description": "Este endponint retorna todos os logs que foram realizados.\n\nExemplo de Requisição:  \n[http://localhost:8080/log](http://localhost:8080/)\n\nExemplo de Resposta:\n\n  \nacao: get  \ndata_hora: 20.59  \nproduto_id: 12  \nuserInsert: Lucas"
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Folder que contem os registros dos métodos ultilizados."
 		}
 	]
 }
