@@ -38,9 +38,13 @@ class ProdutoRepository {
         $stmt->bindParam(":userInsert", $userInsert);
         $stmt->bindParam(":data_hora", $data_hora);
         
-        $stmt->execute();
+        $executionCompleted = $stmt->execute();
+        
+        if ($executionCompleted) {
+            $this->genaratorLog("Criar produto", $data_hora, $this->connection->lastInsertId(), $userInsert);
+        }
 
-        $this->genaratorLog("Criar produto", $data_hora, $this->connection->lastInsertId(), $userInsert);
+        return $executionCompleted;
     }
     
     public function updateProduto($id, Produto $produto) {
@@ -63,9 +67,13 @@ class ProdutoRepository {
         $stmt->bindParam(":data_hora", $data_hora);
         $stmt->bindParam(":produto_id", $id);
         
-        $stmt->execute();
+        $executionCompleted = $stmt->execute();
+        
+        if ($executionCompleted) {
+            $this->genaratorLog("Atualizar produto", $data_hora, $id, $userInsert);
+        }
 
-        $this->genaratorLog("Atualizar produto", $data_hora, $id, $userInsert);
+        return $executionCompleted;
     }
 
     public function searchByIdProduto($id) {
@@ -101,15 +109,20 @@ class ProdutoRepository {
 
         $stmt->bindParam(":id", $id);
 
-        $stmt->execute();
+        
+        $executionCompleted = $stmt->execute();
+        
+        if ($executionCompleted) {
+            $this->genaratorLog("Deletar produto", DateTimeZoneCustom::getCurrentDateTime(), $id, $userInsert);
+        }
 
-        $this->genaratorLog("Deletar produto", DateTimeZoneCustom::getCurrentDateTime(), $id, $userInsert);
+        return $executionCompleted;
     }
 
     public function genaratorLog($acao, $data_hora, $produto_id, $userInsert) {
         $log = new Log($acao, $data_hora, $produto_id, $userInsert);
 
-        $logRepository = new LogRepository($this->connection);
+        $logRepository = new LogRepository();
 
         $logRepository->createLog($log);
     }
