@@ -86,3 +86,12 @@ A documentação dos endpoints, incluindo exemplos de requisições e respostas,
 
 Um relatório técnico detalhado foi elaborado, explicando o processo de desenvolvimento da aplicação, a implementação dos logs e a validação dos campos. O relatório também destaca as principais dificuldades enfrentadas e as soluções adotadas.
 
+## Principais Desafios
+
+Ao desenvolver o projeto, encontramos dificuldades ao estabelecer conexão com o banco de dados, o que nos levou a instalar um pacote complementar e criar uma classe específica para a conexão, incluindo o tratamento de exceções. 
+
+Além disso, tivemos problemas ao passar os dados para validação de campos. No entanto, separamos arquivos específicos para retornar as mensagens de validação, erro e default, o que tornou o processo mais simples e compreensível.
+
+Em suma, o projeto em si não apresentou grandes dificuldades.
+
+
