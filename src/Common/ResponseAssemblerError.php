@@ -14,6 +14,15 @@ final class ResponseAssemblerError {
             "campos" => $fields
         ]) . "\n"; 
     }
+    
+    public static function responseDelete($statusCode) {
 
+        http_response_code($statusCode);
+
+        echo json_encode([
+            "status" => false,
+            "message" => "Error ao realizar a exclusão do registro!"
+        ]) . "\n"; 
+    }
 
 }
