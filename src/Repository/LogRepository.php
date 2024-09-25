@@ -2,6 +2,7 @@
 namespace Avaliacao\Web\Repository;
 
 use Avaliacao\Web\Common\DateTimeZoneCustom;
+use Avaliacao\Web\Database\DatabaseConnection;
 use PDO;
 
 class LogRepository {
@@ -10,8 +11,8 @@ class LogRepository {
     private $table = "log";
 
 
-    public function __construct($connection) {
-       $this->connection = $connection;
+    public function __construct() {
+        $this->connection = DatabaseConnection::getInstance();
     }
 
 
